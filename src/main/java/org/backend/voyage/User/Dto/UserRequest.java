@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class UserRequest implements InterUserReq{
     @NotEmpty
     private String firstname;
     @NotEmpty

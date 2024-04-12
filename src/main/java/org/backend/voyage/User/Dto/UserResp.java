@@ -10,7 +10,8 @@ import org.backend.voyage.User.Model.User;
 import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
-@AllArgsConstructor@Builder
+@AllArgsConstructor
+@Builder
 public class UserResp {
     public UserResp(User us){
         this.id= us.getId();

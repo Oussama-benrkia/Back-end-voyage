@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.backend.voyage.Heber.Model.Hebergement;
+import org.backend.voyage.User.Model.User;
 
 
 @Data

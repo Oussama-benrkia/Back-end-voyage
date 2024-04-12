@@ -28,19 +28,12 @@ public class SecurityConfiguration {
     private final LogoutService logoutService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/images/**").permitAll()
-                        .requestMatchers("/api/users/my").hasAnyRole(Role.Admin.name(),Role.User.name())
-                        /*  .requestMatchers(HttpMethod.GET,"/api/post/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/demo/**").permitAll()
+                        .requestMatchers("/api/users/**").hasAuthority(Role.Admin.name())
 
-                        .requestMatchers(HttpMethod.POST,"/api/demo/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/api/demo/**").permitAll()
-/api/images
-                        .requestMatchers(HttpMethod.GET,"/api/post/my").hasAnyRole(Role.User.name(),Role.Admin.name())*/
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
