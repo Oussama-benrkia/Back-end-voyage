@@ -3,7 +3,7 @@ package org.backend.voyage.Auten.Service;
 import lombok.RequiredArgsConstructor;
 import org.backend.voyage.Auten.Dto.AuthenticaReq;
 import org.backend.voyage.Auten.Dto.AuthenticationResponse;
-import org.backend.voyage.User.Dto.UserRequest;
+import org.backend.voyage.User.Dto.BaseUserRequest;
 import org.backend.voyage.Auten.Model.Enum.TokenType;
 import org.backend.voyage.Auten.Model.Token;
 import org.backend.voyage.User.Model.Enum.Role;
@@ -25,7 +25,7 @@ public class AuthenticationService {
     private final AuthenticationManager authmana;
     private final InRepToken repToken;
     private final ImgService imgserv;
-    public AuthenticationResponse register(UserRequest req){
+    public AuthenticationResponse register(BaseUserRequest req){
         String img="";
         if(req.getImage()!=null){
             img=imgserv.addimage(req.getImage(),"Users");

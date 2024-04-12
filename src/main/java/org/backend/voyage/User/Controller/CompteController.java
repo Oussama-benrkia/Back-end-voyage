@@ -2,7 +2,7 @@ package org.backend.voyage.User.Controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.backend.voyage.User.Dto.UserRequestUp;
+import org.backend.voyage.User.Dto.BaseUserRequestUp;
 import org.backend.voyage.User.Dto.UserResp;
 import org.backend.voyage.User.Dto.Userpassword;
 import org.backend.voyage.User.Service.UserService;
@@ -24,7 +24,7 @@ public class CompteController {
         return ResponseEntity.ok(userResp);
     }
     @PutMapping
-    public ResponseEntity<UserResp> update_myaccount(@Valid @ModelAttribute UserRequestUp userResp){
+    public ResponseEntity<UserResp> update_myaccount(@Valid @ModelAttribute BaseUserRequestUp userResp){
         UserResp usser = userService.update_myaccount(userResp);
         if(userResp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

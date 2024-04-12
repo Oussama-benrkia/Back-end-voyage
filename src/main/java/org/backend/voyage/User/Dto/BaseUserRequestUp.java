@@ -14,19 +14,17 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest2 implements InterUserReq{
-    @NotEmpty
-    private String firstname;
-    @NotEmpty
-    private String lastname;
-    @NotEmpty
-    private String password;
+public class BaseUserRequestUp {
     @NotNull
-    private String Role;
-    @NotEmpty
+    private String firstname;
+    @NotNull
+    private String lastname;
+    @NotNull
     @Email
     private String email;
-    @NotEmpty
+    @NotNull
+    private String password;
+    @NotNull
     private MultipartFile image;
 }
 

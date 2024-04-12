@@ -3,6 +3,7 @@ package org.backend.voyage.Heber.Service;
 import lombok.RequiredArgsConstructor;
 import org.backend.voyage.Heber.DTo.HeberDto;
 import org.backend.voyage.Heber.DTo.HeberResponse;
+import org.backend.voyage.Heber.DTo.HeberUpDto;
 import org.backend.voyage.Heber.Model.Hebergement;
 import org.backend.voyage.Heber.Rep.IntRepHeberg;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,7 @@ public class HerbertService implements IntHerberService {
         Hebergement hebergement=repHeber.findById(id).orElse(null);
         HeberResponse response = null;
         if (hebergement != null) {
-            response=new HeberResponse();
-            response.setId(hebergement.getId());
-            response.setNom(hebergement.getNom());
-            response.setVille(hebergement.getVille());
+            response=new HeberResponse(hebergement);
         }
         return response;
     }
@@ -44,7 +42,7 @@ public class HerbertService implements IntHerberService {
 
 
     @Override
-    public HeberResponse Update_Post(HeberDto p, Long id) {
+    public HeberResponse Update_Post(HeberUpDto p, Long id) {
         Hebergement heberg=repHeber.findById(id).orElse(null);
         if(heberg!=null){
             if(!p.nom().isEmpty()){

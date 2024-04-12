@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.backend.voyage.Heber.DTo.HeberDto;
 import org.backend.voyage.Heber.DTo.HeberResponse;
+import org.backend.voyage.Heber.DTo.HeberUpDto;
 import org.backend.voyage.Heber.Service.HerbertService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HeberController {
     private final HerbertService herberService;
+    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping
     public ResponseEntity<HeberResponse> Create_Heb(@Valid @RequestBody HeberDto heberDto){
         HeberResponse response = herberService.Create_Post(heberDto);
@@ -32,6 +35,7 @@ public class HeberController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
     public ResponseEntity<HeberResponse> Delete_Heb(@PathVariable("id") Long id){
         HeberResponse response = herberService.Delete_Post(id);
@@ -41,8 +45,10 @@ public class HeberController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PreAuthorize("hasAuthority('Admin')")
     @PutMapping("/{id}")
-    public ResponseEntity<HeberResponse> Update_Heb(@PathVariable("id") Long id,@Valid @RequestBody HeberDto heberDto){
+    public ResponseEntity<HeberResponse> Update_Heb(@PathVariable("id") Long id,@Valid @RequestBody HeberUpDto heberDto){
+        HeberUpDto HeberUpDto;
         HeberResponse response = herberService.Update_Post(heberDto,id);
         if (response != null) {
             return ResponseEntity.ok(response);
@@ -50,22 +56,7 @@ public class HeberController {
             return ResponseEntity.notFound().build();
         }
     }
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleMethodAr(
-            MethodArgumentNotValidException exp
-    ){
-        var errors=new HashMap<String , String>();
-        exp.getBindingResult().getAllErrors()
-                .forEach(objectError ->
-                {
-                    var fieldName=((FieldError)objectError).getField();
-                    var errorMes=objectError.getDefaultMessage();
-                    errors.put(fieldName,errorMes);
 
-                });
-
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
     @GetMapping()
     public ResponseEntity<List<HeberResponse>>list_all_Hebergemt(
             @RequestParam(defaultValue = "") String serach
@@ -84,6 +75,7 @@ public class HeberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/pagination")
     public ResponseEntity<Page<HeberResponse>>paginate_all_Post(
             @RequestParam(defaultValue = "0") int page,
@@ -94,8 +86,20 @@ public class HeberController {
         Page<HeberResponse> posts = herberService.list_Heber(pageable,search);
         return ResponseEntity.ok(posts);
     }
-    @GetMapping("/hh")
-    public String hh(){
-        return "hello";
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodAr(
+            MethodArgumentNotValidException exp
+    ){
+        var errors=new HashMap<String , String>();
+        exp.getBindingResult().getAllErrors()
+                .forEach(objectError ->
+                {
+                    var fieldName=((FieldError)objectError).getField();
+                    var errorMes=objectError.getDefaultMessage();
+                    errors.put(fieldName,errorMes);
+
+                });
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

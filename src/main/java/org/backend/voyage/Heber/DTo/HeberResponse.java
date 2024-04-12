@@ -16,9 +16,12 @@ public class HeberResponse {
     private Long id;
     private String nom;
     private String ville;
+    private String website;
+
     public HeberResponse(Hebergement h){
         this.id=h.getId();
         this.ville=h.getVille();
         this.nom=h.getNom();
+        this.website=h.getWebsite();
     }
 }

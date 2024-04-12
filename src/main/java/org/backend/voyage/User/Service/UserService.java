@@ -79,7 +79,7 @@ public class UserService {
                 })
                 .collect(Collectors.toList());
     }
-    public UserResp Create_User(UserRequest2 req) {
+    public UserResp Create_User(UserRequest req) {
         String img="";
         if(req.getImage()!=null){
             img=imgService.addimage(req.getImage(),"Users");
@@ -108,7 +108,7 @@ public class UserService {
         return null;
     }
     /***-----------------------------**/
-    public UserResp Update_User(UserRequest2Up userRequest, Long id) {
+    public UserResp Update_User(UserRequestUp userRequest, Long id) {
         User user = repUser.findById(id).orElse(null);
         if (user != null) {
             if (!userRequest.getFirstname().isEmpty()) {
@@ -138,24 +138,24 @@ public class UserService {
         }
         return null;
     }
-    public UserResp update_myaccount(UserRequestUp userRequestUp) {
+    public UserResp update_myaccount(BaseUserRequestUp baseUserRequestUp) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = repUser.findByEmail(userDetails.getUsername()).orElse(null);
         if (user != null) {
-            if (!userRequestUp.getFirstname().isEmpty()) {
-                user.setFirst_name(userRequestUp.getFirstname());
+            if (!baseUserRequestUp.getFirstname().isEmpty()) {
+                user.setFirst_name(baseUserRequestUp.getFirstname());
             }
-            if (!userRequestUp.getLastname().isEmpty()) {
-                user.setLast_name(userRequestUp.getLastname());
+            if (!baseUserRequestUp.getLastname().isEmpty()) {
+                user.setLast_name(baseUserRequestUp.getLastname());
             }
-            if (!userRequestUp.getEmail().isEmpty()) {
-                user.setEmail(userRequestUp.getEmail());
+            if (!baseUserRequestUp.getEmail().isEmpty()) {
+                user.setEmail(baseUserRequestUp.getEmail());
             }
-            if (userRequestUp.getImage() != null) {
+            if (baseUserRequestUp.getImage() != null) {
                 if (!user.getImage().isEmpty()) {
                     imgService.deleteimage(user.getImage());
                 }
-                String newImageFileName = imgService.addimage(userRequestUp.getImage(), "Users");
+                String newImageFileName = imgService.addimage(baseUserRequestUp.getImage(), "Users");
                 user.setImage(newImageFileName);
             }
             User s=repUser.save(user);

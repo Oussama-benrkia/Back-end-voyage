@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +67,7 @@ public class UserControl {
     }
 
 @PostMapping
-    public ResponseEntity<UserResp> Create_User(@Valid @ModelAttribute UserRequest2 userRequest){
+    public ResponseEntity<UserResp> Create_User(@Valid @ModelAttribute UserRequest userRequest){
     UserResp response = userService.Create_User(userRequest);
         if (response != null) {
             return ResponseEntity.ok(response);
@@ -77,7 +76,7 @@ public class UserControl {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<UserResp> Update_Heb(@PathVariable("id") Long id, @Valid @ModelAttribute UserRequest2Up userRequest){
+    public ResponseEntity<UserResp> Update_Heb(@PathVariable("id") Long id, @Valid @ModelAttribute UserRequestUp userRequest){
         UserResp response = userService.Update_User(userRequest,id);
         if (response != null) {
             return ResponseEntity.ok(response);

@@ -18,4 +18,6 @@ public class Hebergement {
     @Column(unique = true)
     private String nom;
     private String ville;
+    private String website;
+
 }

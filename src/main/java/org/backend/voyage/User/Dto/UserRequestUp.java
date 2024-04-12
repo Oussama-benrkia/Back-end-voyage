@@ -13,11 +13,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestUp implements InterUserReq{
+public class UserRequestUp {
     @NotNull
     private String firstname;
     @NotNull
     private String lastname;
+    @NotNull
+    private String Role;
+    @NotNull
+    private String password;
     @NotNull
     @Email
     private String email;

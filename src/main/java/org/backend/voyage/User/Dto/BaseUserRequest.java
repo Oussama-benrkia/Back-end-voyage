@@ -1,7 +1,7 @@
 package org.backend.voyage.User.Dto;
 
-
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,19 +13,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest2Up implements InterUserReq {
-    @NotNull
+public class BaseUserRequest {
+    @NotEmpty
     private String firstname;
-    @NotNull
+    @NotEmpty
     private String lastname;
-    @NotNull
-    private String Role;
-    @NotNull
-    private String password;
-    @NotNull
     @Email
+    @NotEmpty
     private String email;
+    @NotEmpty
+    private String password;
     @NotNull
     private MultipartFile image;
 }
-
