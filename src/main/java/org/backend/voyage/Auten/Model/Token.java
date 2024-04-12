@@ -15,7 +15,7 @@ import org.backend.voyage.User.Model.User;
 @Entity
 public class Token {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String token;

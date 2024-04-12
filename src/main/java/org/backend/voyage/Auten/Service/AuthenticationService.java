@@ -3,13 +3,14 @@ package org.backend.voyage.Auten.Service;
 import lombok.RequiredArgsConstructor;
 import org.backend.voyage.Auten.Dto.AuthenticaReq;
 import org.backend.voyage.Auten.Dto.AuthenticationResponse;
-import org.backend.voyage.Auten.Dto.RegisterReq;
+import org.backend.voyage.User.Dto.UserRequest;
 import org.backend.voyage.Auten.Model.Enum.TokenType;
 import org.backend.voyage.Auten.Model.Token;
 import org.backend.voyage.User.Model.Enum.Role;
 import org.backend.voyage.User.Model.User;
 import org.backend.voyage.Auten.Rep.InRepToken;
 import org.backend.voyage.User.repo.IntRepUser;
+import org.backend.voyage.Util.ImgService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,12 +24,18 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authmana;
     private final InRepToken repToken;
-    public AuthenticationResponse register(RegisterReq req){
+    private final ImgService imgserv;
+    public AuthenticationResponse register(UserRequest req){
+        String img="";
+        if(req.getImage()!=null){
+            img=imgserv.addimage(req.getImage(),"Users");
+        }
         var user= User.builder().first_name(req.getFirstname())
                 .Last_name(req.getLastname())
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
-                .role(Role.Admin)
+                .role(Role.User)
+                .image(img)
                 .build();
         rep.save(user);
         var jwttoken=jwtService.generateToken(user);

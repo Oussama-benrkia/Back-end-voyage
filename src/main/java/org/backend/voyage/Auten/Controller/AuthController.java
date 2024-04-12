@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.backend.voyage.Auten.Dto.AuthenticaReq;
 import org.backend.voyage.Auten.Dto.AuthenticationResponse;
-import org.backend.voyage.Auten.Dto.RegisterReq;
+import org.backend.voyage.User.Dto.UserRequest;
 import org.backend.voyage.Auten.Service.AuthenticationService;
 import org.backend.voyage.User.repo.IntRepUser;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class AuthController {
     private final IntRepUser rep;
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-           @Valid @RequestBody RegisterReq req
+           @Valid @ModelAttribute UserRequest req
     ){
         if (rep.existsByEmail(req.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -51,7 +51,6 @@ public class AuthController {
                     errors.put(fieldName,errorMes);
 
                 });
-
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

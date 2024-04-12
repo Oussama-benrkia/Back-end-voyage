@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.backend.voyage.Auten.Model.Token;
 import org.backend.voyage.User.Model.Enum.Role;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +29,7 @@ public class User implements UserDetails {
     private Long id;
     private String first_name;
     private String Last_name;
-
+    private String image;
     @Column(unique = true)
     private String email;
     private String password;
@@ -35,7 +37,7 @@ public class User implements UserDetails {
     private Role role;
     @CreationTimestamp
     private LocalDateTime datcrt;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Token> tokens;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
