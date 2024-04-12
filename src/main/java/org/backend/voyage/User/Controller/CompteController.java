@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/api/mycompte")
 public class CompteController {
     private final UserService userService;
-    @GetMapping("/mycompte")
+    @GetMapping()
     public ResponseEntity<UserResp> myaccount(){
         UserResp userResp = userService.myCompte();
         if(userResp == null){
