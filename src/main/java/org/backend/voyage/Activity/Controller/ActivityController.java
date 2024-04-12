@@ -1,17 +1,16 @@
-package org.backend.voyage.Heber.Controller;
+package org.backend.voyage.Activity.Controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.backend.voyage.Heber.DTo.HeberDto;
-import org.backend.voyage.Heber.DTo.HeberResponse;
-import org.backend.voyage.Heber.DTo.HeberUpDto;
-import org.backend.voyage.Heber.Service.HerbertService;
+import org.backend.voyage.Activity.DTo.ActivityResponse;
+import org.backend.voyage.Activity.DTo.Activityrequest;
+import org.backend.voyage.Activity.DTo.ActivityrequestUp;
+import org.backend.voyage.Activity.Service.ActivityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,14 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/hebergements")
+@RequestMapping("/api/activity")
 @RequiredArgsConstructor
-public class HeberController {
-    private final HerbertService herberService;
+public class ActivityController {
+    private final ActivityService activityService;
+    @GetMapping("/types")
+    public ResponseEntity<List<String>> getalltype(){
+        return ResponseEntity.ok(activityService.getalltype());
+    }
     @PreAuthorize("hasAuthority('Admin')")
     @PostMapping
-    public ResponseEntity<HeberResponse> Create_Heb(@Valid @RequestBody HeberDto heberDto){
-        HeberResponse response = herberService.Create_Post(heberDto);
+    public ResponseEntity<ActivityResponse> Create_Activity(@Valid @RequestBody Activityrequest activityrequest){
+        ActivityResponse response = activityService.Create_acti(activityrequest);
         if (response != null) {
             return ResponseEntity.ok(response);
         } else {
@@ -37,8 +40,8 @@ public class HeberController {
     }
     @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<HeberResponse> Delete_Heb(@PathVariable("id") Long id){
-        HeberResponse response = herberService.Delete_Post(id);
+    public ResponseEntity<ActivityResponse> Delete_Acti(@PathVariable("id") Long id){
+        ActivityResponse response = activityService.Delete_acti(id);
         if (response != null) {
             return ResponseEntity.ok(response);
         } else {
@@ -47,9 +50,8 @@ public class HeberController {
     }
     @PreAuthorize("hasAuthority('Admin')")
     @PutMapping("/{id}")
-    public ResponseEntity<HeberResponse> Update_Heb(@PathVariable("id") Long id,@Valid @RequestBody HeberUpDto heberDto){
-        HeberUpDto HeberUpDto;
-        HeberResponse response = herberService.Update_Post(heberDto,id);
+    public ResponseEntity<ActivityResponse> Update_acti(@PathVariable("id") Long id,@Valid @RequestBody ActivityrequestUp activityrequest){
+        ActivityResponse response = activityService.Update_acti(activityrequest,id);
         if (response != null) {
             return ResponseEntity.ok(response);
         } else {
@@ -58,17 +60,17 @@ public class HeberController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<HeberResponse>>list_all_Hebergemt(
+    public ResponseEntity<List<ActivityResponse>>list_all_acti(
             @RequestParam(defaultValue = "") String search
     ){
-        List<HeberResponse> posts = herberService.list_heber_by_serch(search);
+        List<ActivityResponse> posts = activityService.list_acti_by_serch(search);
         return ResponseEntity.ok(posts);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<HeberResponse>Show_heber(
+    public ResponseEntity<ActivityResponse>Show_activ(
             @PathVariable("id") Long id
     ){
-        HeberResponse response=herberService.find_Heber(id);
+        ActivityResponse response=activityService.find_activi(id);
         if (response != null) {
             return ResponseEntity.ok(response);
         } else {
@@ -77,13 +79,13 @@ public class HeberController {
     }
     @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/pagination")
-    public ResponseEntity<Page<HeberResponse>>paginate_all_Post(
+    public ResponseEntity<Page<ActivityResponse>>paginate_all_acti(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "8") int size,
             @RequestParam(defaultValue = "")String search
     ){
         Pageable pageable = PageRequest.of(page, size);
-        Page<HeberResponse> posts = herberService.list_Heber(pageable,search);
+        Page<ActivityResponse> posts = activityService.list_activi(pageable,search);
         return ResponseEntity.ok(posts);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)

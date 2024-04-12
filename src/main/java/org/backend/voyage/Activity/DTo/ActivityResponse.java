@@ -1,24 +1,24 @@
-package org.backend.voyage.Activity.Model;
+package org.backend.voyage.Activity.DTo;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.backend.voyage.Activity.Model.Activity;
 import org.backend.voyage.Activity.Model.Enum.Type_Acti;
-
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Activity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ActivityResponse {
     private Long id;
-    @Column(unique = true)
     private String nom;
     private String ville;
-    @Enumerated(EnumType.STRING)
     private Type_Acti type;
+    public ActivityResponse(Activity a) {
+        this.id = a.getId();
+        this.nom = a.getNom();
+        this.ville = a.getVille();
+        this.type = a.getType();
+    }
 }

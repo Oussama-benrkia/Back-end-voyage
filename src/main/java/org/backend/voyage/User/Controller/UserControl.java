@@ -23,9 +23,9 @@ public class UserControl {
     private final UserService userService;
     @GetMapping
     public ResponseEntity<List<UserResp>>list_all_User(
-            @RequestParam(defaultValue = "") String serach
+            @RequestParam(defaultValue = "") String search
     ){
-        List<UserResp> posts = userService.list_User_by_serch(serach);
+        List<UserResp> posts = userService.list_User_by_serch(search);
         return ResponseEntity.ok(posts);
     }
     @GetMapping("/{id}")
