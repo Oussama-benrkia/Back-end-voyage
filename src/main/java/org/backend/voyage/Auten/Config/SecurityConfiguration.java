@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.backend.voyage.User.Model.Enum.Role;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,17 +28,13 @@ public class SecurityConfiguration {
     private final LogoutService logoutService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                      /*  .requestMatchers(HttpMethod.GET,"/api/post/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/demo/**").permitAll()
-
-                        .requestMatchers(HttpMethod.POST,"/api/demo/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/api/demo/**").permitAll()
-
-                        .requestMatchers(HttpMethod.GET,"/api/post/my").hasAnyRole(Role.User.name(),Role.Admin.name())*/
+                        .requestMatchers(HttpMethod.GET,"/api/images/**").permitAll()
+                        .requestMatchers("/api/users/**").hasAuthority(Role.Admin.name())
+                        .requestMatchers(HttpMethod.GET,"/api/activity/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/hebergements/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

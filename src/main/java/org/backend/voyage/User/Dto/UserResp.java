@@ -10,19 +10,21 @@ import org.backend.voyage.User.Model.User;
 import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
-@AllArgsConstructor@Builder
+@AllArgsConstructor
+@Builder
 public class UserResp {
     public UserResp(User us){
         this.id= us.getId();
         this.first_name=us.getFirst_name();
         this.Last_name=us.getLast_name();
         this.email= us.getEmail();
-        this.role=getRole();
-
+        this.role=us.getRole();
+        this.image=us.getImage();
     }
     private Long id;
     private String first_name;
     private String Last_name;
     private String email;
     private Role role;
+    private String image;
 }
