@@ -135,7 +135,7 @@ public class ReservaController {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/{id}")
+    @GetMapping ("/{id}")
     public ResponseEntity<ResevationResponse> find_reservation(
             @PathVariable("id") Long id){
         ResevationResponse response = reservationService.find_reservation(id);
