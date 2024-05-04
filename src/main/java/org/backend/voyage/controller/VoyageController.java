@@ -102,7 +102,6 @@ public class VoyageController {
         List<VoyageResponse> posts = voyageService.voyages(search,ville,Date_debut,Date_fin);
         return ResponseEntity.ok(posts);
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/pagination")
     public ResponseEntity<Page<VoyageResponse>>paginate_voy(
             @RequestParam(defaultValue = "0") int page,
