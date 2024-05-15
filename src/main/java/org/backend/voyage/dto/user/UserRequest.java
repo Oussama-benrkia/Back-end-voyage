@@ -25,7 +25,6 @@ public class UserRequest {
     @NotEmpty
     @Email
     private String email;
-    @NotEmpty
     private MultipartFile image;
 }
 
