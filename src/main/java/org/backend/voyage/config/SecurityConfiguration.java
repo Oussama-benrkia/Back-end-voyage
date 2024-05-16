@@ -34,7 +34,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,"/api/Voyage/**").permitAll()
 
                         .requestMatchers(HttpMethod.GET,"/api/images/**").permitAll()
-                        .requestMatchers("/api/users/**").hasAuthority(Role.Admin.name())
                         .requestMatchers(HttpMethod.GET,"/api/activity/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/hebergements/**").permitAll()
                         .anyRequest().authenticated()

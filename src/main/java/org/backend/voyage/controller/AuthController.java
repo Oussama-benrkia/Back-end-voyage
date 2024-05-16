@@ -14,7 +14,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -23,18 +22,21 @@ public class AuthController {
     private final IntRepUser rep;
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-           @Valid @ModelAttribute BaseUserRequest req
+            @Valid @ModelAttribute BaseUserRequest req
     ){
         if (rep.existsByEmail(req.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(AuthenticationResponse.builder().message("Email already exists").token(null)
+                    .body(AuthenticationResponse.builder()
+                            .message("Email already exists")
+                            .token(null)
                             .build());
         }
-        return ResponseEntity.ok(service.register(req));
+        AuthenticationResponse response = service.register(req);
+        return ResponseEntity.ok(response);
     }
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> register(
-           @Valid @RequestBody AuthenticaReq req
+            @Valid @RequestBody AuthenticaReq req
     ){
         return ResponseEntity.ok(service.authenticate(req));
     }
