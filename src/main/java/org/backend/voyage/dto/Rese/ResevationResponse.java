@@ -17,13 +17,16 @@ public class ResevationResponse {
     private Long User;
     private Long voyage;
     private String generator;
-
+    private String nom_voyage;
+    private Double prix;
     public ResevationResponse(Reservation reservation) {
         this.id = reservation.getId();
         this.date=reservation.getCreatedAt();
         this.User=reservation.getUser().getId();
         this.voyage=reservation.getVoyage().getId();
         this.generator=reservation.getGenerator();
+        this.nom_voyage=reservation.getVoyage().getName();
+        this.prix=reservation.getVoyage().getPrix();
 
     }
 }
