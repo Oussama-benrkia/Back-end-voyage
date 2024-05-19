@@ -28,7 +28,6 @@ import java.util.List;
 public class ReservaController {
     public final ReservationService reservationService;
     public final IntRepUser repUser;
-    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping
     public ResponseEntity<List<ResevationResponse>> affiche_reservation(
             @RequestParam(defaultValue = "") String date_debut,

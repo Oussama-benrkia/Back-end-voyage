@@ -25,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HeberController {
     private final HerbertService herberService;
-    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping
     public ResponseEntity<HeberResponse> Create_Heb(@Valid @RequestBody HeberDto heberDto){
         HeberResponse response = herberService.Create_Post(heberDto);
@@ -35,7 +34,6 @@ public class HeberController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
     public ResponseEntity<HeberResponse> Delete_Heb(@PathVariable("id") Long id){
         HeberResponse response = herberService.Delete_Post(id);
@@ -45,7 +43,6 @@ public class HeberController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @PutMapping("/{id}")
     public ResponseEntity<HeberResponse> Update_Heb(@PathVariable("id") Long id,@Valid @RequestBody HeberUpDto heberDto){
         HeberUpDto HeberUpDto;
@@ -75,7 +72,6 @@ public class HeberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/pagination")
     public ResponseEntity<Page<HeberResponse>>paginate_all_Post(
             @RequestParam(defaultValue = "0") int page,

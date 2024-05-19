@@ -28,7 +28,6 @@ public class ActivityController {
     public ResponseEntity<List<String>> getalltype(){
         return ResponseEntity.ok(activityService.getalltype());
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping
     public ResponseEntity<ActivityResponse> Create_Activity(@Valid @RequestBody Activityrequest activityrequest){
         ActivityResponse response = activityService.Create_acti(activityrequest);
@@ -38,7 +37,6 @@ public class ActivityController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ActivityResponse> Delete_Acti(@PathVariable("id") Long id){
         ActivityResponse response = activityService.Delete_acti(id);
@@ -48,7 +46,6 @@ public class ActivityController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @PutMapping("/{id}")
     public ResponseEntity<ActivityResponse> Update_acti(@PathVariable("id") Long id,@Valid @RequestBody ActivityrequestUp activityrequest){
         ActivityResponse response = activityService.Update_acti(activityrequest,id);
@@ -77,7 +74,6 @@ public class ActivityController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/pagination")
     public ResponseEntity<Page<ActivityResponse>>paginate_all_acti(
             @RequestParam(defaultValue = "0") int page,

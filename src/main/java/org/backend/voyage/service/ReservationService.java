@@ -42,6 +42,8 @@ public class ReservationService {
                     ResevationResponse res = ResevationResponse.builder().id(r.getId())
                             .date(r.getCreatedAt())
                             .User(r.getUser().getId())
+                            .nom_voyage(r.getVoyage().getName())
+                            .prix(r.getVoyage().getPrix())
                             .voyage(r.getVoyage().getId()).build();
                     return res;
                 })

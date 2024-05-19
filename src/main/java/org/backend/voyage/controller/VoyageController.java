@@ -29,7 +29,6 @@ public class VoyageController {
     public ResponseEntity<List<String>> getalltype(){
         return ResponseEntity.ok(voyageService.getalltransp());
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping
     public ResponseEntity<VoyageResponse> Create_Activity(@Valid @ModelAttribute Voyagerequest req) throws ParseException {
         VoyageResponse response = voyageService.Create_voyage(req);
@@ -39,8 +38,6 @@ public class VoyageController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
     public ResponseEntity<VoyageResponse> Delete_Acti(@PathVariable("id") Long id){
         VoyageResponse response = voyageService.Delete_voyage(id);
@@ -78,7 +75,6 @@ public class VoyageController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PreAuthorize("hasAuthority('Admin')")
     @PutMapping("/{id}")
     public ResponseEntity<VoyageResponse> Updatevoyage(
             @PathVariable("id") Long id,
