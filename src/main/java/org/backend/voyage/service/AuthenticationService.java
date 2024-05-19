@@ -37,10 +37,10 @@ public class AuthenticationService {
                 .role(Role.User)
                 .image(img)
                 .build();
-        rep.save(user);
+       var u= rep.save(user);
         var jwttoken=jwtService.generateToken(user);
         SaveToken(jwttoken, user);
-        return AuthenticationResponse.builder().token(jwttoken).message("success").build();
+        return AuthenticationResponse.builder().token(jwttoken).message("success").id(u.getId()).build();
     }
 
     private void SaveToken(String jwttoken, User user) {
@@ -61,8 +61,8 @@ public class AuthenticationService {
         var user=rep.findByEmail(req.getEmail()).orElseThrow();
         var nmtoken=jwtService.generateToken(user);
         SaveToken(nmtoken,user);
-        return AuthenticationResponse.builder().token(nmtoken)
-                .build();
+        return AuthenticationResponse.builder().token(nmtoken).message("success").id(user.getId()).build();
+
     }
     private void revokeallUserToken(User user){
         var validtoken=repToken.findAllValidTokens(user.getId());
